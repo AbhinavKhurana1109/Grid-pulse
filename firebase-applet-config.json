@@ -1,0 +1,9 @@
+{
+  "apiKey": "mock-api-key",
+  "authDomain": "nextn-f7c8d.firebaseapp.com",
+  "projectId": "nextn-f7c8d",
+  "storageBucket": "nextn-f7c8d.appspot.com",
+  "messagingSenderId": "",
+  "appId": "",
+  "firestoreDatabaseId": "(default)"
+}

@@ -1,0 +1,72 @@
+
+{
+  "entities": {
+    "GridData": {
+      "title": "GridData",
+      "description": "Represents the matrix cell values and secondary table values for a specific context (user global or client).",
+      "type": "object",
+      "properties": {
+        "cells": {
+          "type": "object",
+          "description": "A mapping of cell indices (1-100) to their numerical values."
+        },
+        "secondaryCells": {
+          "type": "object",
+          "description": "A mapping of A/B cell keys (e.g., 'A1', 'B5') to their numerical values."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["cells"]
+    },
+    "SavedSheet": {
+      "title": "SavedSheet",
+      "description": "A snapshot of the grid data with a specific name.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "cells": { "type": "object" },
+        "secondaryCells": { "type": "object" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "cells", "secondaryCells", "createdAt"]
+    },
+    "Client": {
+      "title": "Client",
+      "description": "A client with their own matrix and financial terms.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "partnership": { "type": "number", "description": "Percentage share for the partner." },
+        "commission": { "type": "number", "description": "Percentage deducted as commission." },
+        "claim": { "type": "number", "description": "Flat amount subtracted from balance after commission." },
+        "claimRate": { "type": "number", "description": "Multiplier used to calculate claim based on a reference box." },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "partnership", "commission", "createdAt"]
+    }
+  },
+  "auth": {
+    "providers": ["google.com"]
+  },
+  "firestore": {
+    "/grids/{userId}/dailySheets/{dateId}": {
+      "schema": "GridData",
+      "description": "Stores the dated matrix and side table data for the user's global dashboard."
+    },
+    "/grids/{userId}/savedSheets/{sheetId}": {
+      "schema": "SavedSheet",
+      "description": "Individual snapshots of grid data saved by the user."
+    },
+    "/grids/{userId}/clients/{clientId}": {
+      "schema": "Client",
+      "description": "Client metadata and settings."
+    },
+    "/grids/{userId}/clients/{clientId}/dailySheets/{dateId}": {
+      "schema": "GridData",
+      "description": "Stores the dated matrix and side table data for a specific client."
+    }
+  }
+}
